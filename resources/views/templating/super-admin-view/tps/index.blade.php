@@ -17,6 +17,7 @@
         <table id="example" class="display cell-border row-border" style="width:100%">
             <thead>
                 <tr>
+                    <th>No</th>
                     <th>Nama TPS</th>
                     <th>Alamat</th>
                     <th>Lokasi</th>
@@ -27,6 +28,7 @@
             <tbody>
                 @foreach ($voting_places as $item)
                     <tr class="text-justify" >
+                        <td></td>
                         <td>{{ $item->voting_place_name }}</td>
                         <td>{{ $item->voting_place_address }}</td>
                         <td>

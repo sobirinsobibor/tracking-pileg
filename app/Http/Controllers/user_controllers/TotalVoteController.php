@@ -105,6 +105,8 @@ class TotalVoteController extends Controller
 
             $id_voting_place = $request->id_voting_place;
             $id_candidate = $request->id_candidate;
+            $count_id_candidate = count($request->input('id_candidate'));
+            $count_candidate_vote_vote_count = count($request->input('candidate_vote_vote_count'));
             $count_id_party = count($request->input('id_party'));
             $count_total_vote_vote_count =count($request->input('total_vote_vote_count'));
 
@@ -122,15 +124,21 @@ class TotalVoteController extends Controller
                     event(new Registered($identity_votes));
 
                     //candidate_votes
-                    $candidate_votes = CandidateVote::create([
-                        'candidate_vote_vote_count' => $request->candidate_vote_vote_count,
-                        'id_voting_place' => $id_voting_place,
-                        'id_candidate' => $id_candidate,
-                        'created_at' => now(),
-                        'updated_at' => now()
-                    ]);
-                    event(new Registered($candidate_votes));
-
+                    if($count_id_candidate === $count_candidate_vote_vote_count){
+                        for($i=0; $i<$count_id_candidate; $i++){
+                            $candidate_votes = CandidateVote::create([
+                                'candidate_vote_vote_count' => $request->candidate_vote_vote_count[$i],
+                                'id_voting_place' => $id_voting_place,
+                                'id_candidate' => $id_candidate[$i],
+                                'created_at' => now(),
+                                'updated_at' => now()
+                            ]);
+                            event(new Registered($candidate_votes));
+                        }
+                    }else{
+                        return false;
+                    }
+                    
                     //total_votes
                     if($count_id_party === $count_total_vote_vote_count){
                         for($i=0; $i<$count_id_party; $i++){
@@ -146,6 +154,7 @@ class TotalVoteController extends Controller
                     }else{
                         return false;
                     }
+
                 // Jika semua perintah berhasil, konfirmasikan transaksi
                 DB::commit();
             } catch (\Exception $e) {
@@ -187,7 +196,7 @@ class TotalVoteController extends Controller
                     $candidate = Candidate::select([
                         'candidate_name',
                         'candidate_encrypted_id'
-                    ])->first();
+                    ])->get();
             
                     $parties = Party::select([
                         'party_encrypted_id',
@@ -209,7 +218,7 @@ class TotalVoteController extends Controller
                         ->where('detail_location_of_voting_places.id_user', Auth::user()->id)
                         ->first();
                         return view('templating.user-view.perolehan-suara.create', [
-                            'candidate' => $candidate,
+                            'candidates' => $candidate,
                             'parties' => $parties,
                             'voting_places' => $combinedQuery
                         ]);

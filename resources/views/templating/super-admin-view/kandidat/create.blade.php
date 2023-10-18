@@ -18,10 +18,22 @@
                         <label for="candidate_name" class="form-label">Nama Kandidat</label>
                         <input type="text" class="form-control" id="candidate_name" name="candidate_name" required>
                     </div>
+                    <div class="mb-3">
+                        <label for="candidate_gender" class="form-label">Jenis Kelamin</label>
+                        <select class="form-select" aria-label="Default select example" name="candidate_gender" required>
+                            <option value="" selected>--pilih opsi--</option>
+                            <option value="1" >Laki-Laki</option>
+                            <option value="0" >Perempuan</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="candidate_address" class="form-label">Kota Tempat Tinggal</label>
+                        <input type="text " class="form-control text-uppercase" id="candidate_address" name="candidate_address" required>
+                    </div>
+                    <div style="display: flex; justify-content: flex-end;">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
                 </div>
-            </div>
-            <div style="display: flex; justify-content: flex-start;">
-                <button type="submit" class="btn btn-primary">Submit</button>
             </div>
         </form>
     </div>

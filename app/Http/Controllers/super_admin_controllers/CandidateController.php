@@ -14,14 +14,14 @@ class CandidateController extends Controller
      */
     public function index()
     {
-        $countCandidate = Candidate::count();
-        $candidate = Candidate::select([
-            'candidate_name'
-        ])->first();
+        $candidates = Candidate::select([
+            'candidate_name',
+            'candidate_gender',
+            'candidate_address'
+        ])->get();
 
         return view('templating.super-admin-view.kandidat.index', [
-            'countCandidate' => $countCandidate,
-            'candidate' => $candidate
+            'candidates' => $candidates
         ]);
     }
 
@@ -30,12 +30,7 @@ class CandidateController extends Controller
      */
     public function create()
     {
-        $countCandidate = Candidate::count();
-        if($countCandidate < 1){
-            return view('templating.super-admin-view.kandidat.create');
-        }else{
-            return redirect('/dashboard/superadmin/kandidat')->with('message', ['text' => 'Kandidat Hanya Dirancang Untuk Satu Orang', 'class' => 'warning']);
-        }
+        return view('templating.super-admin-view.kandidat.create');
 
     }
 
@@ -45,11 +40,11 @@ class CandidateController extends Controller
     public function store(StoreCandidateRequest $request)
     {
         try{
-            $countCandidate = Candidate::count();
-            if($countCandidate < 1){
                 $artificial_id = $this->makeCandidateAID();
                 $validatedData = $request->validate([
-                    'candidate_name' => 'required'
+                    'candidate_name' => 'required',
+                    'candidate_gender' => 'required',
+                    'candidate_address' => 'required',
                 ]);
     
                 $validatedData['candidate_artificial_id'] = $artificial_id;
@@ -67,10 +62,6 @@ class CandidateController extends Controller
     
                 Candidate::create($validatedData);
                 return redirect('/dashboard/superadmin/kandidat')->with('message', ['text' => 'Data Successfully Added', 'class' => 'success']);
-    
-            }else{
-                return redirect('/dashboard/superadmin/kandidat/create')->with('message', ['text' => 'Terjadi Error', 'class' => 'danger']);
-            }
         }catch(\Exception $e){
             return redirect('/dashboard/superadmin/kandidat/create')->with('message', ['text' => $e->getMessage(), 'class' => 'danger']);
         }

@@ -92,9 +92,30 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        //
+        try{
+            $user_exist = User::where('nik', '=', $id)->exists();
+            if(!$user_exist){
+                return redirect('/dashboard/superadmin/user')->with('message', ['text' =>'User Tidak Ditemukan', 'class' => 'danger']);
+            }
+            $user = User::select([
+                'name',
+                'email',
+                'nik',
+                'telephone',
+                'address',
+                'roles.role_name'
+            ])->join('roles', 'users.id_role', '=', 'roles.id')
+              ->where('nik', '=', $id)->first();
+       
+            return view('templating.super-admin-view.user.detail', [
+                'user' => $user
+            ]);
+    
+        }catch(\Exception $e){
+            return redirect('/dashboard/superadmin/user')->with('message', ['text' => $e->getMessage(), 'class' => 'danger']);
+        }
     }
 
     /**

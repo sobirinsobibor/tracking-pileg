@@ -12,6 +12,8 @@ class Candidate extends Model
     protected $fillable =[
         'candidate_name',
         'candidate_artificial_id',
-        'candidate_encrypted_id'
+        'candidate_encrypted_id',
+        'candidate_gender',
+        'candidate_address'
     ];
 }

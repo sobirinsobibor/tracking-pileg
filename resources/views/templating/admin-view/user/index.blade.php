@@ -19,7 +19,7 @@
                 <tr>
                     <th>No</th>
                     <th>Nama</th>
-                    <th>Email</th>
+                    {{-- <th>Email</th> --}}
                     <th>NIK</th>
                     <th>Alamat</th>
                     <th>Telephone</th>
@@ -32,14 +32,14 @@
                     <tr class="text-justify" >
                         <th></th>
                         <td>{{ $item->name }}</td>
-                        <td>{{ $item->email }}</td>
+                        {{-- <td>{{ $item->email }}</td> --}}
                         <td>{{ $item->nik }}</td>
                         <td>{{ $item->address }}</td>
                         <td>{{ $item->telephone }}</td>
 
                         <td>{{ $item->role_name }}</td>
                         <td>
-                            <a href="/dashboard/superadmin/tps/{{ $item->voting_place_encrypted_id }}" class="btn btn-primary rounded">
+                            <a href="/dashboard/admin/user/{{ $item->nik }}" class="btn btn-primary rounded">
                                 <i class="bi bi-eye"></i>
                             </a>
                         </td>

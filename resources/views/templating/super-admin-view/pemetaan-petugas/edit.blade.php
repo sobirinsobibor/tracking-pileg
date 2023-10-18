@@ -30,6 +30,11 @@
                             <td>{{ $user->name }}</td>
                         </tr>
                         <tr>
+                            <th>Nik</th>
+                            <th>:</th>
+                            <td>{{ $user->nik }}</td>
+                        </tr>
+                        <tr>
                             <th>Email</th>
                             <th>:</th>
                             <td>{{ $user->email }}</td>

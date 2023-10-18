@@ -14,12 +14,14 @@ class CandidateController extends Controller
      */
     public function index()
     {
-        $candidate = Candidate::select([
-            'candidate_name'
-        ])->first();
+        $candidates = Candidate::select([
+            'candidate_name',
+            'candidate_gender',
+            'candidate_address'
+        ])->get();
 
         return view('templating.user-view.kandidat.index', [
-            'candidate' => $candidate
+            'candidates' => $candidates
         ]);
     }
 

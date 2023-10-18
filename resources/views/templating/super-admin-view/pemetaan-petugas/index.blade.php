@@ -6,7 +6,7 @@
 @section('main-content')
 <div class="card">
     <div class="card-body">
-        <h5 class="card-title fw-semibold mb-4">Pengguna</h5>
+        <h5 class="card-title fw-semibold mb-4">Petugas</h5>
 
         @if(session('message'))
             <div class="alert alert-{{ session('message')['class'] }} alert-dismissible fade show"  role="alert">
@@ -19,9 +19,9 @@
                 <tr>
                     <th>No</th>
                     <th>Nama</th>
-                    <th>Email</th>
-                    <th>Alamat</th>
+                    <th>Nik</th>
                     <th>Telephone</th>
+                    <th>Alamat</th>
                     <th></th>
                     <th>Aksi</th>
                 </tr>
@@ -31,7 +31,7 @@
                     <tr class="text-justify" >
                         <th></th>
                         <td>{{ $item->name }}</td>
-                        <td>{{ $item->email }}</td>
+                        <td>{{ $item->nik }}</td>
                         <td>{{ $item->address }}</td>
                         <td>{{ $item->telephone }}</td>
                         @php

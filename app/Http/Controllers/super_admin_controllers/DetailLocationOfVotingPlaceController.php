@@ -19,6 +19,7 @@ class DetailLocationOfVotingPlaceController extends Controller
         $users = User::select([
             'id',
             'name',
+            'nik',
             'email',
             'telephone',
             'address',

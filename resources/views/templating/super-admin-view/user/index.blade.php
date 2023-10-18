@@ -19,10 +19,10 @@
                 <tr>
                     <th>No</th>
                     <th>Nama</th>
-                    <th>Email</th>
+                    {{-- <th>Email</th> --}}
                     <th>NIK</th>
-                    <th>Alamat</th>
                     <th>Telephone</th>
+                    <th>Alamat</th>
                     <th>Role</th>
                     <th>Aksi</th>
                 </tr>
@@ -32,14 +32,13 @@
                     <tr class="text-justify" >
                         <th></th>
                         <td>{{ $item->name }}</td>
-                        <td>{{ $item->email }}</td>
+                        {{-- <td>{{ $item->email }}</td> --}}
                         <td>{{ $item->nik }}</td>
-                        <td>{{ $item->address }}</td>
                         <td>{{ $item->telephone }}</td>
-
+                        <td>{{ $item->address }}</td>
                         <td>{{ $item->role_name }}</td>
                         <td>
-                            <a href="" class="btn btn-primary rounded">
+                            <a href="/dashboard/superadmin/user/{{ $item->nik }}" class="btn btn-primary rounded">
                                 <i class="bi bi-eye"></i>
                             </a>
                         </td>

@@ -54,7 +54,7 @@
                         </td>
                         <td>{{ $item->electoral_district_name }}</td>
                         <td>
-                            <a href="/dashboard/superadmin/tps/{{ $item->voting_place_encrypted_id }}" class="btn btn-primary rounded">
+                            <a href="/dashboard/admin/tps/{{ $item->voting_place_encrypted_id }}" class="btn btn-primary rounded">
                                 <i class="bi bi-eye"></i>
                             </a>
                         </td>

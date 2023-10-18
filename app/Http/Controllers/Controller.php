@@ -13,6 +13,7 @@ class Controller extends BaseController
     protected function encrypted_id($id){
         $encryptedWord = openssl_encrypt($id, 'AES-128-ECB', 'westhuyt');
         $result = substr($encryptedWord, 0, 16);
-        return $result;
+        $base64url = strtr(base64_encode($result), '+/', '-_');
+        return $base64url;
     }
 }
