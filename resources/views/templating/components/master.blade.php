@@ -5,9 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Hitung Suara</title>
-    <link rel="shortcut icon" type="image/png" href=" {{ asset('modernize/src/assets/images/logos/favicon.png') }} " />
+    <link rel="icon" type="image/png" href=" {{ asset('modernize/src/assets/images/icon/3d-cube.png') }} " />
     <link rel="stylesheet" href="{{ asset('modernize/src/assets/css/styles.min.css') }}" />
-    <link rel="icon" href="{{ asset('modernize/src/assets/images/icon/3d-cube.png') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{ asset('modernize/src/assets/libs/apexcharts/dist/apexcharts.css') }}">
     {{-- data table --}}
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">

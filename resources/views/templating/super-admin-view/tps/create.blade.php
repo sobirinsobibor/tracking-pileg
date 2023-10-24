@@ -1,5 +1,15 @@
 @extends('templating.components.master');
 
+@section('css-page')
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/css/selectize.default.min.css"
+  integrity="sha512-pTaEn+6gF1IeWv3W1+7X7eM60TFu/agjgoHmYhAfLEU8Phuf6JKiiE8YmsNC0aCgQv4192s4Vai8YZ6VNM6vyQ=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+/>
+@endsection
+
 @section('main-content')
 <div class="card">
     <div class="card-body">
@@ -23,7 +33,7 @@
                         <textarea class="form-control" id="voting_place_address" name="voting_place_address" rows="3" required></textarea>
                     </div>
                     <div class="mb-3">
-                        <select class="form-select" aria-label="Default select example" name="id_electoral_district" required>
+                        <select aria-label="Default select example" name="id_electoral_district" required>
                             <option value="" selected>Daerah Pilihan</option>
                             @foreach ($electoral_districts as $item)
                                 <option value="{{ $item->electoral_district_encrypted_id }}">{{ $item->electoral_district_name }}</option>
@@ -32,14 +42,17 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="mb-3">
-                        <label for="voting_place_sub_district" class="form-label">Desa/Kelurahan</label>
-                        <input type="text" class="form-control text-uppercase" id="voting_place_sub_district" name="voting_place_sub_district" required>
+                    <div class="mb-3 mt-4">
+                        <select name="id_sub_district" required >
+                            <option value="" selected>Desa/Kelurahan, Kecamatan</option>
+                            @foreach ($sub_districts as $item)
+                                <option value="{{ $item->sub_district_encrypted_id }}" >
+                                    {{ $item->sub_district_name }}, {{ $item->district_name }}
+                                </option>
+                            @endforeach
+                        </select>
                     </div>
-                    <div class="mb-3">
-                        <label for="voting_place_district" class="form-label">Kecamatan</label>
-                        <input type="text" class="form-control text-uppercase" id="voting_place_district" name="voting_place_district" required>
-                    </div>
+                    
                     <div class="mb-3">
                         <label for="voting_place_city" class="form-label">Kabupaten/Kota</label>
                         <input type="text" class="form-control text-uppercase" id="voting_place_city" name="voting_place_city" required>
@@ -62,18 +75,21 @@
 
 @section('js-page')
 
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/js/selectize.min.js"
+  integrity="sha512-IOebNkvA/HZjMM7MxL0NYeLYEalloZ8ckak+NDtOViP7oiYzG5vn6WVXyrJDiJPhl4yRdmNAG49iuLmhkUdVsQ=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js" integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
 <script>
-    var textarea = document.getElementById('electoral_district_description');
-    var charCount = document.getElementById('charCount');
-
-    textarea.addEventListener('input', function() {
-        var charLength = this.value.length; 
-        charCount.textContent = charLength + '/200 karakter'; 
-        if (charLength > 200) {
-            this.value = this.value.substring(0, 200); 
-        }
+    $(document).ready(function () {
+        $('select').selectize({
+            sortField: 'text'
+        });
     });
 </script>
+
 
 
 @endsection

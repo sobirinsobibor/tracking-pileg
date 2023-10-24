@@ -4,6 +4,18 @@
     <div class="card">
         <div class="card-body">
             <h2>Suara Kandidat per TPS</h2>
+            <form action="/dashboard/superadmin/perolehan-suara" method="POST">
+                @csrf
+                <select class="form-control select2" id="pilihkandidat" name="pilihkandidat">
+                    @foreach ($listkandidat as $key => $option)
+                        <option value="{{ $option->id }}">{{ $option->candidate_name }}</option>
+                    @endforeach
+                </select>
+                <input type="submit" class="btn btn-primary mt-1" value="Ganti Kandidat">
+            </form>
+            @isset($tampilnamakandidat->candidate_name)
+                <h5 class="mt-3">Data {{ $tampilnamakandidat->candidate_name }}</h5>
+            @endisset
             @if ($datapertps == null)
                 <h5>Data belum tersedia</h5>
             @endif
@@ -14,10 +26,22 @@
         <div class="col-lg-4">
             <div class="card">
                 <div class="card-body">
+                    <h2>Suara Kandidat per Dapil</h2>
+                    <form action="/dashboard/superadmin/perolehan-suara" method="POST">
+                        @csrf
+                        <select class="form-control select2" id="pilihkandidatdapil" name="pilihkandidatdapil">
+                            @foreach ($listkandidat as $key => $option)
+                                <option value="{{ $option->id }}">{{ $option->candidate_name }}</option>
+                            @endforeach
+                        </select>
+                        <input type="submit" class="btn btn-primary mt-1" value="Ganti Kandidat">
+                    </form>
+                    @isset($tampilnamakandidatdapil->candidate_name)
+                        <h5 class="mt-3">Data {{ $tampilnamakandidatdapil->candidate_name }}</h5>
+                    @endisset
                     @if ($dataperdapil == null)
                         <h5>Data belum tersedia</h5>
                     @endif
-                    <h2>Suara Kandidat per Dapil</h2>
                     <div id="suarakandidatperdapil"></div>
                 </div>
             </div>

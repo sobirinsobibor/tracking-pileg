@@ -20,8 +20,11 @@ class VotingPlaceController extends Controller
             'voting_places.voting_place_encrypted_id',
             'voting_places.voting_place_name',
             'voting_places.voting_place_address',
-            'voting_places.voting_place_sub_district',
-            'voting_places.voting_place_district',
+            'sub_districts.sub_district_name',
+            
+            'districts.district_name',
+
+
             'voting_places.voting_place_city',
             'voting_places.voting_place_province',
 
@@ -30,6 +33,9 @@ class VotingPlaceController extends Controller
         ])
         ->join('voting_places', 'detail_location_of_voting_places.id_voting_place', '=', 'voting_places.voting_place_encrypted_id')
         ->join('electoral_districts', 'voting_places.id_electoral_district', '=', 'electoral_districts.electoral_district_encrypted_id' )
+        ->join('sub_districts', 'voting_places.id_sub_district', '=', 'sub_districts.sub_district_encrypted_id')
+        ->join('districts', 'sub_districts.id_district', '=', 'districts.district_encrypted_id')
+
         ->where('detail_location_of_voting_places.id_user', Auth::user()->id)
         ->first();
 

@@ -35,19 +35,19 @@
                            <table>
                             <tr class="my-1">
                                 <th>Desa</th>
-                                <td>{{ $item->voting_place_sub_district }}</td>
+                                <td class="text-capitalize">{{ $item->sub_district_name}}</td>
                             </tr>
                             <tr class="my-1">
                                 <th>Kecamatan</th>
-                                <td>{{ $item->voting_place_district }}</td>
+                                <td class="text-capitalize">{{ $item->district_name }}</td>
                             </tr>
                             <tr class="my-1">
                                 <th>Kota</th>
-                                <td>{{ $item->voting_place_city}}</td>
+                                <td class="text-capitalize"> {{ $item->voting_place_city}}</td>
                             </tr>
                             <tr class="my-1">
                                 <th>Provinsi</th>
-                                <td>{{ $item->voting_place_province}}</td>
+                                <td class="text-capitalize">{{ $item->voting_place_province}}</td>
                             </tr>
                            </table>
                             

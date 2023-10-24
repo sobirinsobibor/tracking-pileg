@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\super_admin_controllers;
 
+use App\Models\SubDistrict;
 use App\Models\VotingPlace;
 use App\Models\ElectoralDistrict;
 use Illuminate\Support\Facades\DB;
@@ -21,14 +22,18 @@ class VotingPlaceController extends Controller
             'voting_place_encrypted_id',
             'voting_place_name',
             'voting_place_address',
-            'voting_place_sub_district',
-            'voting_place_district',
             'voting_place_city',
             'voting_place_province',
 
+            'sub_districts.sub_district_name',
+            
+            'districts.district_name',
+
             'electoral_districts.electoral_district_name',
 
-        ])->join('electoral_districts', 'voting_places.id_electoral_district', '=', 'electoral_districts.electoral_district_encrypted_id' )
+        ])->join('electoral_districts', 'voting_places.id_electoral_district', '=', 'electoral_districts.electoral_district_encrypted_id')
+          ->join('sub_districts', 'voting_places.id_sub_district', '=', 'sub_districts.sub_district_encrypted_id')
+          ->join('districts', 'sub_districts.id_district', '=', 'districts.district_encrypted_id')
           ->get();
 
         return view('templating.super-admin-view.tps.index',[
@@ -42,6 +47,13 @@ class VotingPlaceController extends Controller
      */
     public function create()
     {
+        $subDistricts = SubDistrict::select([
+            'sub_districts.sub_district_encrypted_id',
+            'sub_districts.sub_district_name',
+            'districts.district_name'
+            
+        ])->join('districts', 'sub_districts.id_district', '=', 'districts.district_encrypted_id')
+          ->get();
         $electoral_districts = ElectoralDistrict::select([
             'electoral_district_encrypted_id',
             'electoral_district_name',
@@ -49,7 +61,8 @@ class VotingPlaceController extends Controller
             'created_at'
         ])->get();
         return view('templating.super-admin-view.tps.create', [
-            'electoral_districts' => $electoral_districts
+            'electoral_districts' => $electoral_districts,
+            'sub_districts' => $subDistricts
         ]);
     }
 
@@ -58,15 +71,15 @@ class VotingPlaceController extends Controller
      */
     public function store(StoreVotingPlaceRequest $request)
     {
+        // dd($request);
         try{
             $validatedData = $request->validate([
                 'voting_place_name' => 'required',
                 'voting_place_address' => 'required|max:101',
-                'voting_place_sub_district' => 'required',
-                'voting_place_district' => 'required',
                 'voting_place_city' => 'required',
                 'voting_place_province' => 'required',
-                'id_electoral_district' => 'required'
+                'id_electoral_district' => 'required',
+                'id_sub_district' => 'required'
             ]);
             $validatedData['voting_place_artificial_id'] = $this->makeVotingPlaceAID($request->id_electoral_district);
             if(!$validatedData['voting_place_artificial_id']){
@@ -95,13 +108,16 @@ class VotingPlaceController extends Controller
         'voting_places.voting_place_encrypted_id',
         'voting_places.voting_place_name',
         'voting_places.voting_place_address',
-        'voting_places.voting_place_sub_district',
-        'voting_places.voting_place_district',
+        'sub_districts.sub_district_name',
+            
+        'districts.district_name',
         'voting_places.voting_place_city',
         'voting_places.voting_place_province',
         'electoral_districts.electoral_district_name',
     ])
         ->join('electoral_districts', 'voting_places.id_electoral_district', '=', 'electoral_districts.electoral_district_encrypted_id')
+        ->join('sub_districts', 'voting_places.id_sub_district', '=', 'sub_districts.sub_district_encrypted_id')
+        ->join('districts', 'sub_districts.id_district', '=', 'districts.district_encrypted_id')
         ->where('voting_places.voting_place_encrypted_id', '=', $id_voting_place)
         ->first();
 

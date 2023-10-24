@@ -5,7 +5,7 @@
     <div class="card-body">
         <h5 class="card-title fw-semibold">Perolehan Suara {{ $voting_places->voting_place_name }} {{ $voting_places->electoral_district_name }} </h5>
         <h5 class="card-title fw-light ">{{ $voting_places->voting_place_address }}</h5>
-        <h5 class="card-title fw-light mb-4">{{ $voting_places->voting_place_sub_district }}, {{ $voting_places->voting_place_district }}, {{ $voting_places->voting_place_city }}, {{ $voting_places->voting_place_province }}</h5>
+        <h5 class="card-title fw-light mb-4 text-capitalize">{{ $voting_places->sub_district_name }}, {{ $voting_places->district_name }}, {{ $voting_places->voting_place_city }}, {{ $voting_places->voting_place_province }}</h5>
 
         @if(session('message'))
         <div class="alert alert-{{ session('message')['class'] }} alert-dismissible fade show"  role="alert">

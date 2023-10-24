@@ -13,8 +13,7 @@ class VotingPlace extends Model
         'voting_place_encrypted_id',
         'voting_place_name',
         'voting_place_address',
-        'voting_place_sub_district',
-        'voting_place_district',
+        'id_sub_district',
         'voting_place_city',
         'voting_place_province',
         'id_electoral_district'

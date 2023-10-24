@@ -35,11 +35,11 @@
                            <table>
                             <tr class="my-1">
                                 <th>Desa</th>
-                                <td>{{ $item->voting_place_sub_district }}</td>
+                                <td>{{ $item->sub_district_name }}</td>
                             </tr>
                             <tr class="my-1">
                                 <th>Kecamatan</th>
-                                <td>{{ $item->voting_place_district }}</td>
+                                <td>{{ $item->district_name }}</td>
                             </tr>
                             <tr class="my-1">
                                 <th>Kota</th>

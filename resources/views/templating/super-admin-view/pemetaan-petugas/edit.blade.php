@@ -58,7 +58,7 @@
                 @if($isRegisteredToTPS > 0) {{-- kalo ada --}}
                 <div class="col-md-6">
                     <h5 class="card-title fw-semibold mb-4">Data TPS</h5>
-                    <table class="table table-borderless">
+                    <table class="table table-borderless text-uppercase">
                         <tr>
                             <th>Nama TPS</th>
                             <th>:</th>
@@ -72,12 +72,12 @@
                         <tr>
                             <th>Desa</th>
                             <th>:</th>
-                            <td>{{ $voting_places->voting_place_sub_district }}</td>
+                            <td>{{ $voting_places->sub_district_name }}</td>
                         </tr>
                         <tr>
                             <th>Kecamatan</th>
                             <th>:</th>
-                            <td>{{ $voting_places->voting_place_district }}</td>
+                            <td>{{ $voting_places->district_name }}</td>
                         </tr>
                         <tr>
                             <th>Kota</th>

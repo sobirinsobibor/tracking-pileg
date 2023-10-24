@@ -30,15 +30,24 @@
             <li class="sidebar-item">
                 <a class="sidebar-link" href="{{ route('dashboard.admin.perolehan-suara') }}" aria-expanded="false">
                     <span>
-                    <i class="ti ti-article"></i>
+                        <i class="bi bi-bar-chart-fill"></i>
                     </span>
                     <span class="hide-menu">Perolehan Suara</span>
                 </a>
             </li>
             <li class="sidebar-item">
+                <a class="sidebar-link" href="{{ route('dashboard.admin.pemetaan-petugas') }}" aria-expanded="false">
+                    <span>
+                        <i class="bi bi-person-vcard-fill"></i>
+                    </span>
+                    <span class="hide-menu">Pemetaan Petugas</span>
+                </a>
+            </li>
+
+            <li class="sidebar-item">
                 <a class="sidebar-link" href="{{ route('dashboard.admin.tps') }}" aria-expanded="false">
                     <span>
-                    <i class="ti ti-article"></i>
+                        <i class="bi bi-clipboard2-check-fill"></i>
                     </span>
                     <span class="hide-menu">TPS</span>
                 </a>
@@ -46,7 +55,7 @@
             <li class="sidebar-item">
                 <a class="sidebar-link" href="{{ route('dashboard.admin.dapil') }}" aria-expanded="false">
                     <span>
-                    <i class="ti ti-article"></i>
+                        <i class="ti ti-article"></i>
                     </span>
                     <span class="hide-menu">Dapil</span>
                 </a>
@@ -54,7 +63,7 @@
             <li class="sidebar-item">
                 <a class="sidebar-link" href="{{ route('dashboard.admin.kandidat') }}" aria-expanded="false">
                     <span>
-                    <i class="ti ti-alert-circle"></i>
+                        <i class="bi bi-person-square"></i>
                     </span>
                     <span class="hide-menu">Kandidat</span>
                 </a>
@@ -62,15 +71,32 @@
             <li class="sidebar-item">
                 <a class="sidebar-link" href="{{ route('dashboard.admin.partai') }}" aria-expanded="false">
                     <span>
-                    <i class="ti ti-alert-circle"></i>
+                        <i class="bi bi-flag-fill"></i>
                     </span>
                     <span class="hide-menu">Partai</span>
                 </a>
             </li>
             <li class="sidebar-item">
+                <a class="sidebar-link" href="{{ route('dashboard.admin.desa') }}" aria-expanded="false">
+                    <span>
+                        <i class="bi bi-flag-fill"></i>
+                    </span>
+                    <span class="hide-menu">Desa</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="{{ route('dashboard.admin.kecamatan') }}" aria-expanded="false">
+                    <span>
+                        <i class="bi bi-flag-fill"></i>
+                    </span>
+                    <span class="hide-menu">Kecamatan</span>
+                </a>
+            </li>
+
+            <li class="sidebar-item">
                 <a class="sidebar-link" href="{{ route('dashboard.admin.user') }}" aria-expanded="false">
                     <span>
-                    <i class="ti ti-cards"></i>
+                        <i class="bi bi-people-fill"></i>
                     </span>
                     <span class="hide-menu">Pengguna</span>
                 </a>

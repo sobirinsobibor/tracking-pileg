@@ -37,8 +37,10 @@ return new class extends Migration
 
         Schema::table('voting_places', function (Blueprint $table) {
             $table->char('id_electoral_district', 16)->nullable(false);
+            $table->char('id_sub_district', 16)->nullable(false);
 
             $table->foreign('id_electoral_district')->references('electoral_district_encrypted_id')->on('electoral_districts');
+            $table->foreign('id_sub_district')->references('sub_district_encrypted_id')->on('sub_districts');
         });
 
         Schema::table('detail_location_of_voting_places', function(Blueprint $table){
@@ -57,6 +59,13 @@ return new class extends Migration
             $table->foreign('id_user')->references('id')->on('users');
             $table->foreign('id_voting_place')->references('voting_place_encrypted_id')->on('voting_places');
         });
+
+        Schema::table('sub_districts', function(Blueprint $table){
+            $table->char('id_district', 16)->nullable(false);
+
+            $table->foreign('id_district')->references('district_encrypted_id')->on('districts');
+        });
+
 
     }
 
@@ -85,7 +94,10 @@ return new class extends Migration
 
         Schema::table('voting_places', function (Blueprint $table) {
             $table->dropForeign(['id_electoral_district']); 
-            $table->dropColumn('id_electoral_district'); 
+            $table->dropColumn('id_electoral_district');
+
+            $table->dropForeign(['id_sub_district']); 
+            $table->dropColumn('id_sub_district'); 
 
         });
 
@@ -110,5 +122,12 @@ return new class extends Migration
             $table->dropColumn('id_voting_place'); 
 
         });
+
+        Schema::table('sub_districts', function(Blueprint $table){
+
+            $table->dropForeign(['id_district']); 
+            $table->dropColumn('id_district'); 
+        });
+
     }
 };

@@ -3,8 +3,10 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\super_admin_controllers\CandidateController as superAdminCandidateController;
+use App\Http\Controllers\super_admin_controllers\DistrictController as superAdminDistrictController;
 use App\Http\Controllers\super_admin_controllers\ElectoralDistrictController as superAdminElectoralDistrictController;
 use App\Http\Controllers\super_admin_controllers\PartyController as superAdminPartyController ;
+use App\Http\Controllers\super_admin_controllers\SubDistrictController as superAdminSubDistrictController;
 use App\Http\Controllers\super_admin_controllers\UserController as superAdminUserController;
 use App\Http\Controllers\super_admin_controllers\VotingPlaceController as superAdminVotingPlaceController;
 
@@ -30,6 +32,15 @@ Route::resource('/'.$main_url.'/'.$sub_url.'/kandidat', superAdminCandidateContr
 // master partai
 Route::resource('/'.$main_url.'/'.$sub_url.'/partai', superAdminPartyController::class)->names([
     'index' => $main_url.'.'.$sub_url.'.partai',
+]);
+
+// master desa
+Route::resource('/'.$main_url.'/'.$sub_url.'/desa', superAdminSubDistrictController::class)->names([
+    'index' => $main_url.'.'.$sub_url.'.desa',
+]);
+// master kecamatab
+Route::resource('/'.$main_url.'/'.$sub_url.'/kecamatan', superAdminDistrictController::class)->names([
+    'index' => $main_url.'.'.$sub_url.'.kecamatan',
 ]);
 
 // master user

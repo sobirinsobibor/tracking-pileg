@@ -17,8 +17,6 @@ return new class extends Migration
             $table->char('voting_place_encrypted_id', 16)->unique()->nullable(false);
             $table->string('voting_place_name', 50)->nullable(false);
             $table->string('voting_place_address', 100)->nullable(false);
-            $table->string('voting_place_sub_district', 50)->nullable(false);
-            $table->string('voting_place_district', 50)->nullable(false);
             $table->string('voting_place_city', 50)->nullable(false);
             $table->string('voting_place_province', 50)->nullable(false);
             $table->timestamps();

@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/login');
 });
 
 Route::get('/dashboard', function () {
@@ -54,6 +54,7 @@ Route::middleware(['adminMiddleware'])->group(function () {
     Route::get('/dashboard/admin', [adminDashboardController::class, 'index'])->name('dashboard.admin');
 
     require __DIR__.'/admin-routes/master.php';
+    require __DIR__.'/admin-routes/pemetaan-petugas.php';
     require __DIR__.'/admin-routes/perolehan-suara.php';
 });
 

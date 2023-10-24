@@ -16,10 +16,33 @@ class TotalVoteController extends Controller
      */
     public function index(Request $request)
     {
+        $pilihkandidat = $request->input('pilihkandidat');
+        $pilihkandidatdapil = $request->input('pilihkandidatdapil');
         $pilihtps = $request->input('pilihtps');
         $pilihdapil = $request->input('pilihdapil');
+        $listkandidat = DB::table('candidates')->get();
         $listtps = DB::table('voting_places')->get();
         $listdapil = DB::table('electoral_districts')->get();
+
+        if ($pilihkandidat != null) {
+            $idkandidatpilihan = $pilihkandidat;
+        } else {
+            if (!empty($listkandidat) && isset($listkandidat[0]->id)) {
+                $idkandidatpilihan = $listkandidat[0]->id;
+            } else {
+                $idkandidatpilihan = 0;
+            }
+        }
+
+        if ($pilihkandidatdapil != null) {
+            $idkandidatdapilpilihan = $pilihkandidatdapil;
+        } else {
+            if (!empty($listkandidat) && isset($listkandidat[0]->id)) {
+                $idkandidatdapilpilihan = $listkandidat[0]->id;
+            } else {
+                $idkandidatdapilpilihan = 0;
+            }
+        }
 
         if ($pilihtps != null) {
             $idtpspilihan = $pilihtps;
@@ -41,10 +64,12 @@ class TotalVoteController extends Controller
             }
         }
 
-        $candidatevotestps = DB::table('candidate_votes')->select('candidate_votes.candidate_vote_vote_count', 'voting_places.voting_place_name')->join('voting_places', 'candidate_votes.id_voting_place', '=', 'voting_places.voting_place_encrypted_id')->get();
-        $candidatevotesdapil = DB::table('candidate_votes')->select(DB::raw('SUM(candidate_votes.candidate_vote_vote_count) as total_vote_count'), 'electoral_districts.electoral_district_name')->groupBy('electoral_districts.electoral_district_encrypted_id')->join('voting_places', 'candidate_votes.id_voting_place', '=', 'voting_places.voting_place_encrypted_id')->join('electoral_districts', 'voting_places.id_electoral_district', '=', 'electoral_districts.electoral_district_encrypted_id')->get();
+        $candidatevotestps = DB::table('candidate_votes')->select('candidate_votes.candidate_vote_vote_count', 'voting_places.voting_place_name')->join('voting_places', 'candidate_votes.id_voting_place', '=', 'voting_places.voting_place_encrypted_id')->join('candidates', 'candidate_votes.id_candidate', '=', 'candidates.candidate_encrypted_id')->where('candidates.id', $idkandidatpilihan)->get();
+        $candidatevotesdapil = DB::table('candidate_votes')->select(DB::raw('SUM(candidate_votes.candidate_vote_vote_count) as total_vote_count'), 'electoral_districts.electoral_district_name')->groupBy('electoral_districts.electoral_district_encrypted_id')->join('voting_places', 'candidate_votes.id_voting_place', '=', 'voting_places.voting_place_encrypted_id')->join('electoral_districts', 'voting_places.id_electoral_district', '=', 'electoral_districts.electoral_district_encrypted_id')->join('candidates', 'candidate_votes.id_candidate', '=', 'candidates.candidate_encrypted_id')->where('candidates.id', $idkandidatdapilpilihan)->get();
         $partyvotestps = DB::table('total_votes')->select('total_votes.total_vote_vote_count', 'parties.party_name')->join('parties', 'total_votes.id_party', '=', 'parties.party_encrypted_id')->join('voting_places', 'total_votes.id_voting_place', '=', 'voting_places.voting_place_encrypted_id')->where('voting_places.id', $idtpspilihan)->get();
         $partyvotesdapil = DB::table('total_votes')->select(DB::raw('SUM(total_votes.total_vote_vote_count) as total_vote_count'), 'parties.party_name')->groupBy('parties.party_encrypted_id')->join('parties', 'total_votes.id_party', '=', 'parties.party_encrypted_id')->join('voting_places', 'total_votes.id_voting_place', '=', 'voting_places.voting_place_encrypted_id')->join('electoral_districts', 'voting_places.id_electoral_district', '=', 'electoral_districts.electoral_district_encrypted_id')->where('electoral_districts.id', $iddapilpilihan)->get();
+        $tampilnamakandidat = DB::table('candidates')->where('id', $idkandidatpilihan)->first();
+        $tampilnamakandidatdapil = DB::table('candidates')->where('id', $idkandidatdapilpilihan)->first();
         $tampilnamatps = DB::table('voting_places')->where('id', $idtpspilihan)->first();
         $tampilnamadapil = DB::table('electoral_districts')->where('id', $iddapilpilihan)->first();
 
@@ -76,8 +101,11 @@ class TotalVoteController extends Controller
             $datapartaiperdapil[] = (int)$partaidapildata->total_vote_count;
         }
         return view('templating.admin-view.perolehan-suara.index', [
+            'listkandidat' => $listkandidat,
             'listtps' => $listtps,
             'listdapil' => $listdapil,
+            'tampilnamakandidat' => $tampilnamakandidat,
+            'tampilnamakandidatdapil' => $tampilnamakandidatdapil,
             'tampilnamatps' => $tampilnamatps,
             'tampilnamadapil' => $tampilnamadapil,
             'labelspertps' => array_values($labelspertps),
@@ -105,10 +133,33 @@ class TotalVoteController extends Controller
      */
     public function store(StoreTotalVoteRequest $request)
     {
+        $pilihkandidat = $request->input('pilihkandidat');
+        $pilihkandidatdapil = $request->input('pilihkandidatdapil');
         $pilihtps = $request->input('pilihtps');
         $pilihdapil = $request->input('pilihdapil');
+        $listkandidat = DB::table('candidates')->get();
         $listtps = DB::table('voting_places')->get();
         $listdapil = DB::table('electoral_districts')->get();
+
+        if ($pilihkandidat != null) {
+            $idkandidatpilihan = $pilihkandidat;
+        } else {
+            if (!empty($listkandidat) && isset($listkandidat[0]->id)) {
+                $idkandidatpilihan = $listkandidat[0]->id;
+            } else {
+                $idkandidatpilihan = 0;
+            }
+        }
+
+        if ($pilihkandidatdapil != null) {
+            $idkandidatdapilpilihan = $pilihkandidatdapil;
+        } else {
+            if (!empty($listkandidat) && isset($listkandidat[0]->id)) {
+                $idkandidatdapilpilihan = $listkandidat[0]->id;
+            } else {
+                $idkandidatdapilpilihan = 0;
+            }
+        }
 
         if ($pilihtps != null) {
             $idtpspilihan = $pilihtps;
@@ -130,10 +181,12 @@ class TotalVoteController extends Controller
             }
         }
 
-        $candidatevotestps = DB::table('candidate_votes')->select('candidate_votes.candidate_vote_vote_count', 'voting_places.voting_place_name')->join('voting_places', 'candidate_votes.id_voting_place', '=', 'voting_places.voting_place_encrypted_id')->get();
-        $candidatevotesdapil = DB::table('candidate_votes')->select(DB::raw('SUM(candidate_votes.candidate_vote_vote_count) as total_vote_count'), 'electoral_districts.electoral_district_name')->groupBy('electoral_districts.electoral_district_encrypted_id')->join('voting_places', 'candidate_votes.id_voting_place', '=', 'voting_places.voting_place_encrypted_id')->join('electoral_districts', 'voting_places.id_electoral_district', '=', 'electoral_districts.electoral_district_encrypted_id')->get();
+        $candidatevotestps = DB::table('candidate_votes')->select('candidate_votes.candidate_vote_vote_count', 'voting_places.voting_place_name')->join('voting_places', 'candidate_votes.id_voting_place', '=', 'voting_places.voting_place_encrypted_id')->join('candidates', 'candidate_votes.id_candidate', '=', 'candidates.candidate_encrypted_id')->where('candidates.id', $idkandidatpilihan)->get();
+        $candidatevotesdapil = DB::table('candidate_votes')->select(DB::raw('SUM(candidate_votes.candidate_vote_vote_count) as total_vote_count'), 'electoral_districts.electoral_district_name')->groupBy('electoral_districts.electoral_district_encrypted_id')->join('voting_places', 'candidate_votes.id_voting_place', '=', 'voting_places.voting_place_encrypted_id')->join('electoral_districts', 'voting_places.id_electoral_district', '=', 'electoral_districts.electoral_district_encrypted_id')->join('candidates', 'candidate_votes.id_candidate', '=', 'candidates.candidate_encrypted_id')->where('candidates.id', $idkandidatdapilpilihan)->get();
         $partyvotestps = DB::table('total_votes')->select('total_votes.total_vote_vote_count', 'parties.party_name')->join('parties', 'total_votes.id_party', '=', 'parties.party_encrypted_id')->join('voting_places', 'total_votes.id_voting_place', '=', 'voting_places.voting_place_encrypted_id')->where('voting_places.id', $idtpspilihan)->get();
         $partyvotesdapil = DB::table('total_votes')->select(DB::raw('SUM(total_votes.total_vote_vote_count) as total_vote_count'), 'parties.party_name')->groupBy('parties.party_encrypted_id')->join('parties', 'total_votes.id_party', '=', 'parties.party_encrypted_id')->join('voting_places', 'total_votes.id_voting_place', '=', 'voting_places.voting_place_encrypted_id')->join('electoral_districts', 'voting_places.id_electoral_district', '=', 'electoral_districts.electoral_district_encrypted_id')->where('electoral_districts.id', $iddapilpilihan)->get();
+        $tampilnamakandidat = DB::table('candidates')->where('id', $idkandidatpilihan)->first();
+        $tampilnamakandidatdapil = DB::table('candidates')->where('id', $idkandidatdapilpilihan)->first();
         $tampilnamatps = DB::table('voting_places')->where('id', $idtpspilihan)->first();
         $tampilnamadapil = DB::table('electoral_districts')->where('id', $iddapilpilihan)->first();
 
@@ -165,8 +218,11 @@ class TotalVoteController extends Controller
             $datapartaiperdapil[] = (int)$partaidapildata->total_vote_count;
         }
         return view('templating.admin-view.perolehan-suara.index', [
+            'listkandidat' => $listkandidat,
             'listtps' => $listtps,
             'listdapil' => $listdapil,
+            'tampilnamakandidat' => $tampilnamakandidat,
+            'tampilnamakandidatdapil' => $tampilnamakandidatdapil,
             'tampilnamatps' => $tampilnamatps,
             'tampilnamadapil' => $tampilnamadapil,
             'labelspertps' => array_values($labelspertps),

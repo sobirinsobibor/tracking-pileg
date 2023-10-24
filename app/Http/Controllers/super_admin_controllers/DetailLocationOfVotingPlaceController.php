@@ -87,14 +87,18 @@ class DetailLocationOfVotingPlaceController extends Controller
                     'voting_place_encrypted_id',
                     'voting_place_name',
                     'voting_place_address',
-                    'voting_place_sub_district',
-                    'voting_place_district',
+                    'sub_districts.sub_district_name',
+            
+                    'districts.district_name',
                     'voting_place_city',
                     'voting_place_province',
         
                     'electoral_districts.electoral_district_name',
         
                 ])->join('electoral_districts', 'voting_places.id_electoral_district', '=', 'electoral_districts.electoral_district_encrypted_id')
+                ->join('sub_districts', 'voting_places.id_sub_district', '=', 'sub_districts.sub_district_encrypted_id')
+                ->join('districts', 'sub_districts.id_district', '=', 'districts.district_encrypted_id')
+        
                   ->where('voting_places.voting_place_encrypted_id', '=', $voting_place)
                   ->first();
             }else{
@@ -113,7 +117,7 @@ class DetailLocationOfVotingPlaceController extends Controller
                 'voting_places'=>$voting_places
             ]);
         }catch(\Exception $e){
-
+            return redirect('/dashboard/superadmin/pemetaan-petugas/'.$user->id.'/edit')->with('message', ['text' => $e->getMessage(), 'class' => 'danger']);
         }
     }
 

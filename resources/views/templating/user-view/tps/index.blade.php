@@ -38,7 +38,7 @@
                     <tr>
                         <th>Desa</th>
                         <th>:</th>
-                        <td class="text-capitalize">{{ $DetailLocationOfVotingPlace->voting_place_sub_district }}</td>
+                        <td class="text-capitalize">{{ $DetailLocationOfVotingPlace->sub_district_name }}</td>
                     </tr>        
                 </table>
             </div>
@@ -47,7 +47,7 @@
                     <tr>
                         <th>Kecamatan</th>
                         <th>:</th>
-                        <td class="text-capitalize">{{ $DetailLocationOfVotingPlace->voting_place_district }}</td>
+                        <td class="text-capitalize">{{ $DetailLocationOfVotingPlace->district_name }}</td>
                     </tr>
                     <tr>
                         <th>Kota</th>

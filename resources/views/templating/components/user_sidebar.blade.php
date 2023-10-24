@@ -30,7 +30,7 @@
             <li class="sidebar-item">
                 <a class="sidebar-link" href="{{ route('dashboard.user.perolehan-suara') }}" aria-expanded="false">
                     <span>
-                    <i class="ti ti-article"></i>
+                        <i class="bi bi-bar-chart-fill"></i>
                     </span>
                     <span class="hide-menu">Perolehan Suara</span>
                 </a>
@@ -46,7 +46,7 @@
             <li class="sidebar-item">
                 <a class="sidebar-link" href="{{ route('dashboard.user.kandidat') }}" aria-expanded="false">
                     <span>
-                    <i class="ti ti-alert-circle"></i>
+                        <i class="bi bi-person-square"></i>
                     </span>
                     <span class="hide-menu">Kandidat</span>
                 </a>
@@ -54,7 +54,7 @@
             <li class="sidebar-item">
                 <a class="sidebar-link" href="{{ route('dashboard.user.partai') }}" aria-expanded="false">
                     <span>
-                    <i class="ti ti-alert-circle"></i>
+                        <i class="bi bi-flag-fill"></i>
                     </span>
                     <span class="hide-menu">Partai</span>
                 </a>
